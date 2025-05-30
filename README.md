@@ -185,6 +185,37 @@ When you run the `Main` class, the framework will:
 
 ---
 
+## ☁️ Maven Usage
+
+This framework is published on **Repsy**. You can easily use it in your Maven project by adding the following dependency
+and repository definition:
+
+### 📦 Dependency
+
+```xml
+
+<dependency>
+    <groupId>com.nuricanozturk.nucleus</groupId>
+    <artifactId>nucleus</artifactId>
+    <version>1.0.0</version>
+</dependency>
+```
+
+### 🗂️ Repository
+
+```xml
+
+<repositories>
+    <repository>
+        <id>repsy</id>
+        <name>My Private Maven Repository on Repsy</name>
+        <url>https://repo.repsy.io/mvn/nuricanozturk/nucleus</url>
+    </repository>
+</repositories>
+```
+
+> **Note:** Place the `<dependency>` and `<repository>` blocks inside the `<project>` section of your `pom.xml` file.
+
 ## 📄 License
 
 **MIT License**
