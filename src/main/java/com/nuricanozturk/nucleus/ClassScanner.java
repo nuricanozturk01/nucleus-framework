@@ -1,6 +1,6 @@
 package com.nuricanozturk.nucleus;
 
-import com.nuricanozturk.nucleus.annotation.core.Component;
+import com.nuricanozturk.nucleus.annotation.Component;
 import java.util.Set;
 import org.jetbrains.annotations.NotNull;
 import org.reflections.Reflections;

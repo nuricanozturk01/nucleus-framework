@@ -1,4 +1,4 @@
-package com.nuricanozturk.nucleus.annotation.core;
+package com.nuricanozturk.nucleus.annotation;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
@@ -7,6 +7,6 @@ import java.lang.annotation.Target;
 
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
-public @interface Component {
-  String value() default "";
+public @interface ComponentScan {
+  String[] basePackages() default {};
 }

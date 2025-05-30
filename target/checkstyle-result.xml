@@ -1,52 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <checkstyle version="10.21.2">
-<file name="/Users/nuricanozturk/Desktop/nucleus-framework/src/main/java/com/nuricanozturk/nucleus/ProxyFactory.java">
-</file>
-<file name="/Users/nuricanozturk/Desktop/nucleus-framework/src/main/java/com/nuricanozturk/nucleus/proxy/NucleusInterceptor.java">
-</file>
-<file name="/Users/nuricanozturk/Desktop/nucleus-framework/src/main/java/com/nuricanozturk/nucleus/ComponentResolver.java">
-</file>
-<file name="/Users/nuricanozturk/Desktop/nucleus-framework/src/main/java/com/nuricanozturk/nucleus/NucleusContext.java">
-</file>
-<file name="/Users/nuricanozturk/Desktop/nucleus-framework/src/main/java/com/nuricanozturk/nucleus/annotation/repeat/Repeat.java">
-</file>
-<file name="/Users/nuricanozturk/Desktop/nucleus-framework/src/main/java/com/nuricanozturk/nucleus/annotation/core/ComponentScan.java">
-</file>
-<file name="/Users/nuricanozturk/Desktop/nucleus-framework/src/main/java/com/nuricanozturk/nucleus/annotation/core/Component.java">
-</file>
-<file name="/Users/nuricanozturk/Desktop/nucleus-framework/src/main/java/com/nuricanozturk/nucleus/annotation/core/Scheduled.java">
-<error line="3" column="29" severity="warning" message="&apos;{&apos; is not followed by whitespace." source="com.puppycrawl.tools.checkstyle.checks.whitespace.WhitespaceAroundCheck"/>
-<error line="3" column="30" severity="warning" message="&apos;}&apos; is not preceded with whitespace." source="com.puppycrawl.tools.checkstyle.checks.whitespace.WhitespaceAroundCheck"/>
-</file>
-<file name="/Users/nuricanozturk/Desktop/nucleus-framework/src/main/java/com/nuricanozturk/nucleus/annotation/core/Qualifier.java">
-</file>
-<file name="/Users/nuricanozturk/Desktop/nucleus-framework/src/main/java/com/nuricanozturk/nucleus/annotation/core/Value.java">
-<error line="3" column="25" severity="warning" message="&apos;{&apos; is not followed by whitespace." source="com.puppycrawl.tools.checkstyle.checks.whitespace.WhitespaceAroundCheck"/>
-<error line="3" column="26" severity="warning" message="&apos;}&apos; is not preceded with whitespace." source="com.puppycrawl.tools.checkstyle.checks.whitespace.WhitespaceAroundCheck"/>
-</file>
-<file name="/Users/nuricanozturk/Desktop/nucleus-framework/src/main/java/com/nuricanozturk/nucleus/annotation/core/EntryPoint.java">
-</file>
-<file name="/Users/nuricanozturk/Desktop/nucleus-framework/src/main/java/com/nuricanozturk/nucleus/annotation/retry/Retryable.java">
-</file>
-<file name="/Users/nuricanozturk/Desktop/nucleus-framework/src/main/java/com/nuricanozturk/nucleus/annotation/retry/Recover.java">
+<file name="/Users/nuricanozturk/Desktop/nucleus-framework/src/main/java/com/nuricanozturk/nucleus/annotation/Recover.java">
 <error line="10" column="27" severity="warning" message="&apos;{&apos; is not followed by whitespace." source="com.puppycrawl.tools.checkstyle.checks.whitespace.WhitespaceAroundCheck"/>
 <error line="10" column="28" severity="warning" message="&apos;}&apos; is not preceded with whitespace." source="com.puppycrawl.tools.checkstyle.checks.whitespace.WhitespaceAroundCheck"/>
 </file>
-<file name="/Users/nuricanozturk/Desktop/nucleus-framework/src/main/java/com/nuricanozturk/nucleus/annotation/retry/BackOff.java">
+<file name="/Users/nuricanozturk/Desktop/nucleus-framework/src/main/java/com/nuricanozturk/nucleus/annotation/NucleusFramework.java">
+<error line="10" column="36" severity="warning" message="&apos;{&apos; is not followed by whitespace." source="com.puppycrawl.tools.checkstyle.checks.whitespace.WhitespaceAroundCheck"/>
+<error line="10" column="37" severity="warning" message="&apos;}&apos; is not preceded with whitespace." source="com.puppycrawl.tools.checkstyle.checks.whitespace.WhitespaceAroundCheck"/>
 </file>
-<file name="/Users/nuricanozturk/Desktop/nucleus-framework/src/main/java/com/nuricanozturk/nucleus/annotation/validation/string/Length.java">
-</file>
-<file name="/Users/nuricanozturk/Desktop/nucleus-framework/src/main/java/com/nuricanozturk/nucleus/annotation/validation/string/Expression.java">
-<error line="3" column="30" severity="warning" message="&apos;{&apos; is not followed by whitespace." source="com.puppycrawl.tools.checkstyle.checks.whitespace.WhitespaceAroundCheck"/>
-<error line="3" column="31" severity="warning" message="&apos;}&apos; is not preceded with whitespace." source="com.puppycrawl.tools.checkstyle.checks.whitespace.WhitespaceAroundCheck"/>
-</file>
-<file name="/Users/nuricanozturk/Desktop/nucleus-framework/src/main/java/com/nuricanozturk/nucleus/NucleusFramework.java">
-</file>
-<file name="/Users/nuricanozturk/Desktop/nucleus-framework/src/main/java/com/nuricanozturk/nucleus/ClassScanner.java">
-</file>
-<file name="/Users/nuricanozturk/Desktop/nucleus-framework/src/main/java/com/nuricanozturk/nucleus/interceptor/DispatcherInterceptor.java">
-</file>
-<file name="/Users/nuricanozturk/Desktop/nucleus-framework/src/main/java/com/nuricanozturk/nucleus/interceptor/RetryInterceptor.java">
-<error line="22" column="3" severity="warning" message="Cyclomatic Complexity is 11 (max allowed is 6)." source="com.puppycrawl.tools.checkstyle.checks.metrics.CyclomaticComplexityCheck"/>
+<file name="/Users/nuricanozturk/Desktop/nucleus-framework/src/main/java/com/nuricanozturk/nucleus/interceptor/internal/RetryInterceptor.java">
+<error line="25" column="3" severity="warning" message="Cyclomatic Complexity is 13 (max allowed is 6)." source="com.puppycrawl.tools.checkstyle.checks.metrics.CyclomaticComplexityCheck"/>
 </file>
 </checkstyle>

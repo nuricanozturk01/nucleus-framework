@@ -1,11 +1,19 @@
 package com.nuricanozturk.nucleus;
 
-import com.nuricanozturk.nucleus.annotation.core.ComponentScan;
-import com.nuricanozturk.nucleus.annotation.core.EntryPoint;
+import com.nuricanozturk.nucleus.annotation.ComponentScan;
+import com.nuricanozturk.nucleus.annotation.EntryPoint;
 import java.util.Set;
 import org.jetbrains.annotations.NotNull;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public final class NucleusFramework {
+  private static final Logger LOGGER = LoggerFactory.getLogger(NucleusFramework.class);
+
+  private NucleusFramework() {
+    LOGGER.debug("NucleusFramework created");
+  }
+
   public static void run(final @NotNull Class<?> clazz) {
     final ComponentScan scan = clazz.getAnnotation(ComponentScan.class);
 
@@ -16,9 +24,7 @@ public final class NucleusFramework {
     for (final String basePackage : scan.basePackages()) {
       final Set<Class<?>> components = ClassScanner.findComponentClasses(basePackage);
 
-      for (final Class<?> componentClass : components) {
-        ComponentResolver.createInstance(componentClass);
-      }
+      components.forEach(ComponentResolver::createInstance);
 
       final Class<?> entryPointClass = getEntryPointClass(components);
       final Object entryPointInstance = NucleusContext.getBean(entryPointClass);

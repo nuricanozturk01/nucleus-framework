@@ -1,12 +1,12 @@
-package com.nuricanozturk.nucleus.annotation.core;
+package com.nuricanozturk.nucleus.annotation;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
-@Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.TYPE)
-public @interface EntryPoint {
-  String value() default "run";
+@Retention(RetentionPolicy.RUNTIME)
+public @interface Component {
+  String value() default "";
 }

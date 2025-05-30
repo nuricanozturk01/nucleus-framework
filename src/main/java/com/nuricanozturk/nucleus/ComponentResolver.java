@@ -1,7 +1,8 @@
 package com.nuricanozturk.nucleus;
 
-import com.nuricanozturk.nucleus.annotation.core.Component;
-import com.nuricanozturk.nucleus.annotation.core.Qualifier;
+import com.nuricanozturk.nucleus.annotation.Component;
+import com.nuricanozturk.nucleus.annotation.Qualifier;
+import com.nuricanozturk.nucleus.proxy.ProxyFactory;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Parameter;
 import org.jetbrains.annotations.NotNull;

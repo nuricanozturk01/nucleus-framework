@@ -1,4 +1,4 @@
-package com.nuricanozturk.nucleus.proxy;
+package com.nuricanozturk.nucleus.interceptor;
 
 import java.lang.reflect.Method;
 import net.bytebuddy.implementation.bind.annotation.AllArguments;

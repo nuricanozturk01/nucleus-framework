@@ -1,4 +1,4 @@
-package com.nuricanozturk.nucleus.annotation.retry;
+package com.nuricanozturk.nucleus.annotation;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
