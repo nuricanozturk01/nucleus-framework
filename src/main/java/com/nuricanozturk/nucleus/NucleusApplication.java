@@ -7,10 +7,10 @@ import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public final class NucleusFramework {
-  private static final Logger LOGGER = LoggerFactory.getLogger(NucleusFramework.class);
+public final class NucleusApplication {
+  private static final Logger LOGGER = LoggerFactory.getLogger(NucleusApplication.class);
 
-  private NucleusFramework() {
+  private NucleusApplication() {
     LOGGER.debug("NucleusFramework created");
   }
 

@@ -1,7 +1,8 @@
-#Fri May 30 17:16:04 TRT 2025
+#Fri May 30 17:28:52 TRT 2025
 /Users/nuricanozturk/Desktop/nucleus-framework/src/main/java/com/nuricanozturk/nucleus/ClassScanner.java=1748614512607
-/Users/nuricanozturk/Desktop/nucleus-framework/src/main/java/com/nuricanozturk/nucleus/ComponentResolver.java=1748614513803
-/Users/nuricanozturk/Desktop/nucleus-framework/src/main/java/com/nuricanozturk/nucleus/NucleusContext.java=1748590111894
+/Users/nuricanozturk/Desktop/nucleus-framework/src/main/java/com/nuricanozturk/nucleus/ComponentResolver.java=1748615144025
+/Users/nuricanozturk/Desktop/nucleus-framework/src/main/java/com/nuricanozturk/nucleus/NucleusApplication.java=1748614789027
+/Users/nuricanozturk/Desktop/nucleus-framework/src/main/java/com/nuricanozturk/nucleus/NucleusContext.java=1748615330061
 /Users/nuricanozturk/Desktop/nucleus-framework/src/main/java/com/nuricanozturk/nucleus/NucleusFramework.java=1748614512589
 /Users/nuricanozturk/Desktop/nucleus-framework/src/main/java/com/nuricanozturk/nucleus/ProxyFactory.java=1748609585964
 /Users/nuricanozturk/Desktop/nucleus-framework/src/main/java/com/nuricanozturk/nucleus/annotation/BackOff.java=1748614512609

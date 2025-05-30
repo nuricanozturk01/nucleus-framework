@@ -2,13 +2,13 @@ com/nuricanozturk/nucleus/ClassScanner.class
 com/nuricanozturk/nucleus/annotation/Retryable.class
 com/nuricanozturk/nucleus/annotation/Scheduled.class
 com/nuricanozturk/nucleus/annotation/Qualifier.class
+com/nuricanozturk/nucleus/NucleusApplication.class
 com/nuricanozturk/nucleus/interceptor/internal/ScheduledInterceptor.class
 com/nuricanozturk/nucleus/ComponentResolver.class
 com/nuricanozturk/nucleus/interceptor/InterceptorFactory.class
 com/nuricanozturk/nucleus/annotation/NucleusFramework.class
 com/nuricanozturk/nucleus/proxy/ProxyFactory.class
 com/nuricanozturk/nucleus/annotation/Recover.class
-com/nuricanozturk/nucleus/NucleusFramework.class
 com/nuricanozturk/nucleus/interceptor/internal/RetryInterceptor.class
 com/nuricanozturk/nucleus/interceptor/internal/RepeatInterceptor.class
 com/nuricanozturk/nucleus/annotation/Component.class

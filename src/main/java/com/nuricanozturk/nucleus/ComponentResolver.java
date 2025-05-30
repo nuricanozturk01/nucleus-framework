@@ -35,7 +35,7 @@ public class ComponentResolver {
       final Object rawInstance = ctor.newInstance(dependencies);
       final Object proxiedInstance = ProxyFactory.createProxyIfNeeded(rawInstance, clazz);
 
-      NucleusContext.registerBean(clazz, name, proxiedInstance);
+      NucleusContext.registerBean(name, proxiedInstance);
 
       return proxiedInstance;
     } catch (final Exception e) {
@@ -51,7 +51,7 @@ public class ComponentResolver {
     final Object defaultDep = createInstance(dependencyType);
     final String depName = resolveBeanName(dependencyType);
 
-    NucleusContext.registerBean(dependencyType, depName, defaultDep);
+    NucleusContext.registerBean(depName, defaultDep);
     return defaultDep;
   }
 
@@ -64,7 +64,7 @@ public class ComponentResolver {
     }
 
     final Object qualifiedDep = createInstance(dependencyType);
-    NucleusContext.registerBean(dependencyType, qualifierName, qualifiedDep);
+    NucleusContext.registerBean(qualifierName, qualifiedDep);
 
     return qualifiedDep;
   }
