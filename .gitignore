@@ -52,3 +52,5 @@ out/
 .env
 
 .DS_STORE
+
+target
