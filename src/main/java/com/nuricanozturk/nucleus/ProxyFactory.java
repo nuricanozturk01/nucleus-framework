@@ -1,11 +1,16 @@
 package com.nuricanozturk.nucleus;
 
-import com.nuricanozturk.nucleus.annotation.retry.RetryInterceptor;
-import com.nuricanozturk.nucleus.annotation.retry.Retryable;
+import static net.bytebuddy.matcher.ElementMatchers.isDeclaredBy;
+import static net.bytebuddy.matcher.ElementMatchers.not;
+
+import com.nuricanozturk.nucleus.interceptor.DispatcherInterceptor;
+import com.nuricanozturk.nucleus.interceptor.RetryInterceptor;
+import com.nuricanozturk.nucleus.proxy.NucleusInterceptor;
 import java.lang.reflect.Method;
+import java.util.List;
 import net.bytebuddy.ByteBuddy;
+import net.bytebuddy.dynamic.DynamicType;
 import net.bytebuddy.implementation.MethodDelegation;
-import net.bytebuddy.matcher.ElementMatchers;
 import org.jetbrains.annotations.NotNull;
 
 public final class ProxyFactory {
@@ -16,25 +21,24 @@ public final class ProxyFactory {
 
   public static Object createProxyIfNeeded(
       final @NotNull Object target, final @NotNull Class<?> targetClass) {
-    boolean hasRetryable = false;
 
-    for (final Method method : targetClass.getDeclaredMethods()) {
-      if (method.isAnnotationPresent(Retryable.class)) {
-        hasRetryable = true;
-        break;
-      }
-    }
+    final List<NucleusInterceptor> interceptors =
+        List.of(new RetryInterceptor(target, targetClass));
 
-    if (!hasRetryable) {
+    if (!hasAnyInterceptor(interceptors, targetClass)) {
       return target;
     }
 
-    try {
-      return new ByteBuddy()
-          .subclass(targetClass)
-          .method(ElementMatchers.isAnnotatedWith(Retryable.class))
-          .intercept(MethodDelegation.to(new RetryInterceptor(target, targetClass)))
-          .make()
+    final DispatcherInterceptor dispatcher = new DispatcherInterceptor(interceptors);
+
+    try (final DynamicType.Unloaded<?> buddy =
+        new ByteBuddy()
+            .subclass(targetClass)
+            .method(not(isDeclaredBy(Object.class)))
+            .intercept(MethodDelegation.to(dispatcher))
+            .make()) {
+
+      return buddy
           .load(targetClass.getClassLoader())
           .getLoaded()
           .getDeclaredConstructor()
@@ -42,5 +46,18 @@ public final class ProxyFactory {
     } catch (final Exception e) {
       throw new RuntimeException("Failed to create proxy for: " + targetClass.getName(), e);
     }
+  }
+
+  private static boolean hasAnyInterceptor(
+      final @NotNull List<NucleusInterceptor> interceptors, final @NotNull Class<?> targetClass) {
+    for (final Method method : targetClass.getDeclaredMethods()) {
+      for (final NucleusInterceptor interceptor : interceptors) {
+        if (interceptor.supports(method)) {
+          return true;
+        }
+      }
+    }
+
+    return false;
   }
 }

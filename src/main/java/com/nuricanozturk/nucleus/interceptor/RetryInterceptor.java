@@ -1,14 +1,16 @@
-package com.nuricanozturk.nucleus.annotation.retry;
+package com.nuricanozturk.nucleus.interceptor;
 
+import com.nuricanozturk.nucleus.annotation.retry.Recover;
+import com.nuricanozturk.nucleus.annotation.retry.Retryable;
+import com.nuricanozturk.nucleus.proxy.NucleusInterceptor;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import net.bytebuddy.implementation.bind.annotation.AllArguments;
 import net.bytebuddy.implementation.bind.annotation.Origin;
-import net.bytebuddy.implementation.bind.annotation.RuntimeType;
 import net.bytebuddy.implementation.bind.annotation.This;
 import org.jetbrains.annotations.NotNull;
 
-public final class RetryInterceptor {
+public final class RetryInterceptor implements NucleusInterceptor {
   private final @NotNull Object targetObject;
   private final @NotNull Class<?> targetClass;
 
@@ -17,9 +19,9 @@ public final class RetryInterceptor {
     this.targetClass = targetClass;
   }
 
-  @RuntimeType
-  public Object intercept(
-      final @This Object proxy, final @AllArguments Object[] args, final @Origin Method method)
+  @Override
+  public Object invoke(
+      final @This Object proxy, final @Origin Method method, final @AllArguments Object[] args)
       throws Throwable {
     final Retryable retryable = method.getAnnotation(Retryable.class);
 
@@ -68,25 +70,33 @@ public final class RetryInterceptor {
     }
   }
 
-  private Object recover(final Throwable ex, final String recoverMethodName, final Object[] args)
+  @Override
+  public boolean supports(final @NotNull Method method) {
+    return method.isAnnotationPresent(Retryable.class);
+  }
+
+  private Object recover(
+      final @NotNull Throwable ex,
+      final @NotNull String recoverMethodName,
+      final @NotNull Object[] args)
       throws Throwable {
     final Method[] methods = this.targetClass.getDeclaredMethods();
 
     for (final Method recoverMethod : methods) {
-      if (recoverMethod.isAnnotationPresent(Recover.class)) {
-        if (recoverMethod.getName().equals(recoverMethodName)) {
-          final Class<?>[] parameterTypes = recoverMethod.getParameterTypes();
+      if (!recoverMethod.isAnnotationPresent(Recover.class)
+          || !recoverMethod.getName().equals(recoverMethodName)) {
+        continue;
+      }
 
-          if (parameterTypes.length > 0 && parameterTypes[0].isAssignableFrom(ex.getClass())) {
-            final Object[] recoverArgs = new Object[parameterTypes.length];
-            recoverArgs[0] = ex;
+      final Class<?>[] parameterTypes = recoverMethod.getParameterTypes();
 
-            System.arraycopy(
-                args, 0, recoverArgs, 1, Math.min(args.length, parameterTypes.length - 1));
+      if (parameterTypes.length > 0 && parameterTypes[0].isAssignableFrom(ex.getClass())) {
+        final Object[] recoverArgs = new Object[parameterTypes.length];
+        recoverArgs[0] = ex;
 
-            return recoverMethod.invoke(this.targetObject, recoverArgs);
-          }
-        }
+        System.arraycopy(args, 0, recoverArgs, 1, Math.min(args.length, parameterTypes.length - 1));
+
+        return recoverMethod.invoke(this.targetObject, recoverArgs);
       }
     }
 
