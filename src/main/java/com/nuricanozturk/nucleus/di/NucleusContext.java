@@ -1,4 +1,4 @@
-package com.nuricanozturk.nucleus;
+package com.nuricanozturk.nucleus.di;
 
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;

@@ -1,9 +1,11 @@
-package com.nuricanozturk.nucleus;
+package com.nuricanozturk.nucleus.di;
 
+import com.nuricanozturk.nucleus.annotation.Autowired;
 import com.nuricanozturk.nucleus.annotation.Component;
 import com.nuricanozturk.nucleus.annotation.Qualifier;
 import com.nuricanozturk.nucleus.proxy.ProxyFactory;
 import java.lang.reflect.Constructor;
+import java.lang.reflect.Field;
 import java.lang.reflect.Parameter;
 import java.util.Set;
 import org.jetbrains.annotations.NotNull;
@@ -34,6 +36,7 @@ public class ComponentResolver {
       }
 
       final Object rawInstance = ctor.newInstance(dependencies);
+      injectAutowiredFields(rawInstance, clazz);
       final Object proxiedInstance = ProxyFactory.createProxyIfNeeded(rawInstance, clazz);
 
       NucleusContext.registerBean(name, proxiedInstance);
@@ -97,5 +100,49 @@ public class ComponentResolver {
     return (component != null && !component.value().isEmpty())
         ? component.value()
         : clazz.getSimpleName();
+  }
+
+  private static void injectAutowiredFields(final Object instance, final Class<?> clazz) {
+    for (final Field field : clazz.getDeclaredFields()) {
+      if (field.isAnnotationPresent(Autowired.class)) {
+        final Class<?> dependencyType = field.getType();
+        final Object dependency;
+
+        if (field.isAnnotationPresent(Qualifier.class)) {
+          final String qualifierName = field.getAnnotation(Qualifier.class).value();
+          if (NucleusContext.contains(qualifierName)) {
+            dependency = NucleusContext.getBean(qualifierName, dependencyType);
+          } else {
+
+            final Set<Class<?>> candidates =
+                ClassScanner.findComponentClasses(dependencyType.getPackageName());
+
+            final Class<?> implClass =
+                candidates.stream()
+                    .filter(c -> isComponent(c, qualifierName, dependencyType))
+                    .findFirst()
+                    .orElseThrow(
+                        () ->
+                            new RuntimeException(
+                                "No component found for qualifier '"
+                                    + qualifierName
+                                    + "' and type: "
+                                    + dependencyType.getName()));
+
+            dependency = createInstance(implClass);
+            NucleusContext.registerBean(qualifierName, dependency);
+          }
+        } else {
+          dependency = nonQualifiedObject(dependencyType);
+        }
+
+        try {
+          field.setAccessible(true);
+          field.set(instance, dependency);
+        } catch (final IllegalAccessException e) {
+          throw new RuntimeException("Failed to inject field: " + field.getName(), e);
+        }
+      }
+    }
   }
 }

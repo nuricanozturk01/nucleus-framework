@@ -2,6 +2,8 @@ package com.nuricanozturk.nucleus;
 
 import com.nuricanozturk.nucleus.annotation.ComponentScan;
 import com.nuricanozturk.nucleus.annotation.EntryPoint;
+import com.nuricanozturk.nucleus.di.ClassScanner;
+import com.nuricanozturk.nucleus.di.ComponentResolver;
 import java.util.Set;
 import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
@@ -27,27 +29,20 @@ public final class NucleusApplication {
 
     for (final String basePackage : basePackages) {
       final Set<Class<?>> components = ClassScanner.findComponentClasses(basePackage);
-
       components.forEach(ComponentResolver::createInstance);
+    }
 
-      final Class<?> entryPointClass = getEntryPointClass(components);
-      final Object entryPointInstance = NucleusContext.getBean(entryPointClass);
-      final String methodName = entryPointClass.getAnnotation(EntryPoint.class).value();
+    if (clazz.isAnnotationPresent(EntryPoint.class)) {
+      final Object entryPointInstance = ComponentResolver.createInstance(clazz);
+      final String methodName = clazz.getAnnotation(EntryPoint.class).value();
+      final String methodToCall = methodName.isEmpty() ? "run" : methodName;
 
       try {
-        entryPointClass.getMethod(methodName).invoke(entryPointInstance);
+        clazz.getMethod(methodToCall).invoke(entryPointInstance);
       } catch (final Exception e) {
         throw new RuntimeException(
-            "Failed to invoke '" + methodName + "' on entry point: " + entryPointClass.getName(),
-            e);
+            "Failed to invoke '" + methodToCall + "' on entry point: " + clazz.getName(), e);
       }
     }
-  }
-
-  private static @NotNull Class<?> getEntryPointClass(final @NotNull Set<Class<?>> components) {
-    return components.stream()
-        .filter(c -> c.isAnnotationPresent(EntryPoint.class))
-        .findFirst()
-        .orElseThrow(() -> new RuntimeException("No @EntryPoint class found."));
   }
 }

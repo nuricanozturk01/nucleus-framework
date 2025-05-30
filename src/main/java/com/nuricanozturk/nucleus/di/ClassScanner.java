@@ -1,4 +1,4 @@
-package com.nuricanozturk.nucleus;
+package com.nuricanozturk.nucleus.di;
 
 import com.nuricanozturk.nucleus.annotation.Component;
 import java.util.Set;
