@@ -216,6 +216,15 @@ and repository definition:
 
 > **Note:** Place the `<dependency>` and `<repository>` blocks inside the `<project>` section of your `pom.xml` file.
 
+## Unit Test
+
+- You can use with Unit Test this framework. I used
+  `own` [Unit Test Framework](https://github.com/nuricanozturk01/Unit-Test-Framework)
+
+## Example Project
+
+- [Example Project used Nucleus Framework](https://github.com/nuricanozturk01/nucleus-framework-example)
+
 ## 📄 License
 
 **MIT License**
