@@ -50,3 +50,5 @@ out/
 **/node_modules/
 
 .env
+
+.DS_STORE

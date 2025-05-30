@@ -6,6 +6,9 @@
 /Users/nuricanozturk/Desktop/nucleus-framework/src/main/java/com/nuricanozturk/nucleus/annotation/core/Component.java
 /Users/nuricanozturk/Desktop/nucleus-framework/src/main/java/com/nuricanozturk/nucleus/annotation/core/ComponentScan.java
 /Users/nuricanozturk/Desktop/nucleus-framework/src/main/java/com/nuricanozturk/nucleus/annotation/core/EntryPoint.java
+/Users/nuricanozturk/Desktop/nucleus-framework/src/main/java/com/nuricanozturk/nucleus/annotation/core/Qualifier.java
+/Users/nuricanozturk/Desktop/nucleus-framework/src/main/java/com/nuricanozturk/nucleus/annotation/core/Scheduled.java
+/Users/nuricanozturk/Desktop/nucleus-framework/src/main/java/com/nuricanozturk/nucleus/annotation/core/Value.java
 /Users/nuricanozturk/Desktop/nucleus-framework/src/main/java/com/nuricanozturk/nucleus/annotation/repeat/Repeat.java
 /Users/nuricanozturk/Desktop/nucleus-framework/src/main/java/com/nuricanozturk/nucleus/annotation/retry/BackOff.java
 /Users/nuricanozturk/Desktop/nucleus-framework/src/main/java/com/nuricanozturk/nucleus/annotation/retry/Recover.java

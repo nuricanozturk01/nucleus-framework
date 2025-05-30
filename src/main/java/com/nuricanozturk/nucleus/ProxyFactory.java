@@ -6,14 +6,16 @@ import java.lang.reflect.Method;
 import net.bytebuddy.ByteBuddy;
 import net.bytebuddy.implementation.MethodDelegation;
 import net.bytebuddy.matcher.ElementMatchers;
+import org.jetbrains.annotations.NotNull;
 
 public final class ProxyFactory {
 
   private ProxyFactory() {
-    // Utility class; prevent instantiation
+    // Utility class
   }
 
-  public static Object createProxyIfNeeded(final Object target, final Class<?> targetClass) {
+  public static Object createProxyIfNeeded(
+      final @NotNull Object target, final @NotNull Class<?> targetClass) {
     boolean hasRetryable = false;
 
     for (final Method method : targetClass.getDeclaredMethods()) {

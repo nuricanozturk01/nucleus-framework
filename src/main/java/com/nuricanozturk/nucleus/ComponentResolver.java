@@ -1,10 +1,12 @@
 package com.nuricanozturk.nucleus;
 
 import com.nuricanozturk.nucleus.annotation.core.Component;
+import com.nuricanozturk.nucleus.annotation.core.Qualifier;
 import java.lang.reflect.Constructor;
+import java.lang.reflect.Parameter;
+import org.jetbrains.annotations.NotNull;
 
 public class ComponentResolver {
-
   public static Object createInstance(final Class<?> clazz) {
     final String name = resolveBeanName(clazz);
 
@@ -13,34 +15,57 @@ public class ComponentResolver {
     }
 
     try {
-      final Constructor<?> constructor = clazz.getConstructors()[0];
-      final Class<?>[] parameterTypes = constructor.getParameterTypes();
-      final Object[] dependencies = new Object[parameterTypes.length];
+      final Constructor<?> ctor = clazz.getConstructors()[0];
+      final Parameter[] parameters = ctor.getParameters();
+      final Object[] dependencies = new Object[parameters.length];
 
-      for (int i = 0; i < parameterTypes.length; i++) {
-        final Class<?> dependencyType = parameterTypes[i];
+      for (int i = 0; i < parameters.length; i++) {
+        final Parameter parameter = parameters[i];
+        final Class<?> dependencyType = parameter.getType();
 
-        if (!NucleusContext.contains(dependencyType)) {
-          final Object depInstance = createInstance(dependencyType);
-          final String depName = resolveBeanName(dependencyType);
-          NucleusContext.registerBean(dependencyType, depName, depInstance);
-        }
+        final Object dependency =
+            parameter.isAnnotationPresent(Qualifier.class)
+                ? qualifierMarkedObject(parameter, dependencyType)
+                : nonQualifiedObject(dependencyType);
 
-        dependencies[i] = NucleusContext.getBean(dependencyType);
+        dependencies[i] = dependency;
       }
 
-      final Object rawInstance = constructor.newInstance(dependencies);
-
+      final Object rawInstance = ctor.newInstance(dependencies);
       final Object proxiedInstance = ProxyFactory.createProxyIfNeeded(rawInstance, clazz);
 
-      // default name should be method name
       NucleusContext.registerBean(clazz, name, proxiedInstance);
 
       return proxiedInstance;
-
     } catch (final Exception e) {
       throw new RuntimeException("Component could not be created: " + clazz.getName(), e);
     }
+  }
+
+  private static Object nonQualifiedObject(final @NotNull Class<?> dependencyType) {
+    if (NucleusContext.contains(dependencyType)) {
+      return NucleusContext.getBean(dependencyType);
+    }
+
+    final Object defaultDep = createInstance(dependencyType);
+    final String depName = resolveBeanName(dependencyType);
+
+    NucleusContext.registerBean(dependencyType, depName, defaultDep);
+    return defaultDep;
+  }
+
+  private static Object qualifierMarkedObject(
+      final @NotNull Parameter parameter, final @NotNull Class<?> dependencyType) {
+    final String qualifierName = parameter.getAnnotation(Qualifier.class).value();
+
+    if (NucleusContext.contains(qualifierName)) {
+      return NucleusContext.getBean(qualifierName, dependencyType);
+    }
+
+    final Object qualifiedDep = createInstance(dependencyType);
+    NucleusContext.registerBean(dependencyType, qualifierName, qualifiedDep);
+
+    return qualifiedDep;
   }
 
   private static String resolveBeanName(final Class<?> clazz) {

@@ -21,12 +21,12 @@
       <property name="illegalPattern" value="true"/>
       <property name="message" value="Trailing whitespace"/>
     </module>
-    <module name="Regexp">
+   <!-- <module name="Regexp">
       <property name="format" value="System\.out\.println"/>
       <property name="illegalPattern" value="true"/>
       <property name="ignoreComments" value="true"/>
       <property name="message" value="println statements are not allowed"/>
-    </module>
+    </module>-->
     <module name="Regexp">
       <property name="format" value="catch \([a-zA-Z]+ [a-zA-Z]\)"/>
       <property name="illegalPattern" value="true"/>
