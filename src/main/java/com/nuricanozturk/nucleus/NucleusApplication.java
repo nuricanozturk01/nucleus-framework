@@ -15,13 +15,17 @@ public final class NucleusApplication {
   }
 
   public static void run(final @NotNull Class<?> clazz) {
+    final String[] basePackages;
+
     final ComponentScan scan = clazz.getAnnotation(ComponentScan.class);
 
-    if (scan == null) {
-      throw new RuntimeException(clazz.getName() + " is not annotated with @ComponentScan");
+    if (scan != null) {
+      basePackages = scan.basePackages();
+    } else {
+      basePackages = new String[] {clazz.getPackage().getName()};
     }
 
-    for (final String basePackage : scan.basePackages()) {
+    for (final String basePackage : basePackages) {
       final Set<Class<?>> components = ClassScanner.findComponentClasses(basePackage);
 
       components.forEach(ComponentResolver::createInstance);
