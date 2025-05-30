@@ -197,7 +197,7 @@ and repository definition:
 <dependency>
     <groupId>com.nuricanozturk.nucleus</groupId>
     <artifactId>nucleus</artifactId>
-    <version>1.0.0</version>
+    <version>0.0.1</version>
 </dependency>
 ```
 

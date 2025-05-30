@@ -5,6 +5,7 @@ import com.nuricanozturk.nucleus.annotation.Qualifier;
 import com.nuricanozturk.nucleus.proxy.ProxyFactory;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Parameter;
+import java.util.Set;
 import org.jetbrains.annotations.NotNull;
 
 public class ComponentResolver {
@@ -63,10 +64,32 @@ public class ComponentResolver {
       return NucleusContext.getBean(qualifierName, dependencyType);
     }
 
-    final Object qualifiedDep = createInstance(dependencyType);
-    NucleusContext.registerBean(qualifierName, qualifiedDep);
+    final Set<Class<?>> candidates =
+        ClassScanner.findComponentClasses(dependencyType.getPackageName());
 
+    final Class<?> implClass =
+        candidates.stream()
+            .filter(c -> isComponent(c, qualifierName, dependencyType))
+            .findFirst()
+            .orElseThrow(
+                () ->
+                    new RuntimeException(
+                        "No component found for qualifier '"
+                            + qualifierName
+                            + "' and type: "
+                            + dependencyType.getName()));
+
+    final Object qualifiedDep = createInstance(implClass);
+    NucleusContext.registerBean(qualifierName, qualifiedDep);
     return qualifiedDep;
+  }
+
+  private static boolean isComponent(
+      final @NotNull Class<?> c,
+      final @NotNull String qualifierName,
+      final @NotNull Class<?> dependencyType) {
+    final Component comp = c.getAnnotation(Component.class);
+    return comp != null && qualifierName.equals(comp.value()) && dependencyType.isAssignableFrom(c);
   }
 
   private static String resolveBeanName(final Class<?> clazz) {
