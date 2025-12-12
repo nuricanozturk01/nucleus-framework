@@ -209,7 +209,7 @@ and repository definition:
     <repository>
         <id>repsy</id>
         <name>My Public Maven Repository on Repsy</name>
-        <url>https://repo.repsy.io/mvn/nuricanozturk/nucleus</url>
+        <url>https://repo.nuricanozturk.com/nucleus</url>
     </repository>
 </repositories>
 ```
